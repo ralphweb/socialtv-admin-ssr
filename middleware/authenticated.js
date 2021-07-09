@@ -1,12 +1,18 @@
-export default function ({ store, redirect, route }) {
+export default function ({ store, redirect, route, router }) {
     // If the user is not authenticated
-    console.log("store.getters['auth/isAuthenticated']");
-    console.log(store.getters['auth/isAuthenticated']);
     if (!store.getters['auth/isAuthenticated']) {
-        console.log("is false");
         if(route.path!='/login') return redirect('/login')
     } else {
-        console.log("is true");
-        if(route.path=='/'||route.path=='/login') return redirect('/sh')  
+        if(route.path=='/'||route.path=='/login') return redirect('/admin')  
+        else {
+            let views = store.getters['auth/views'].map(view => view.path);
+            views.push('/');
+            views.push('/login');
+            views.push('/admin');
+            console.log(views);
+            if(!views.includes(route.path)) {
+                return redirect('/login')
+            }
+        }
     }
 }

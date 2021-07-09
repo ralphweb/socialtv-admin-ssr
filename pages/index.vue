@@ -4,7 +4,6 @@
 
 <script>
   export default {
-    name: 'Checking',
-    middleware: 'authenticated'
+    name: 'Checking'
   }
 </script>

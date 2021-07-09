@@ -67,15 +67,12 @@ export default {
     },
     async login() {
       const that = this;
-      await that.$store.dispatch('auth/login', { email: that.email, password: that.password })
-      that.$router.push("/");
-    }
-  },
-  computed: {
-    isAuthenticated: {
-      get() {
-        const that = this;
-        return that.$store.getters['auth/isAuthenticated'];
+      let response = null;
+      try {
+        response = await that.$store.dispatch('auth/login', { email: that.email, password: that.password })
+        that.$router.push("/admin");
+      } catch(err) {
+        alert("Nombre de usuario y/o contraseña incorrectos.")
       }
     }
   }

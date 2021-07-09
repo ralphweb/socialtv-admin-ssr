@@ -3,6 +3,7 @@ export const AUTH_MUTATIONS = {
     SET_USER: 'SET_USER',
     SET_PAYLOAD: 'SET_PAYLOAD',
     LOGOUT: 'LOGOUT',
+    SET_VIEWS: 'SET_VIEWS',
   }
   
   export const state = () => ({
@@ -10,6 +11,7 @@ export const AUTH_MUTATIONS = {
     refresh_token: null, // JWT refresh token
     id: null, // user id
     email_address: null, // user email address
+    views: [], // user views
   })
   
   export const mutations = {
@@ -17,6 +19,11 @@ export const AUTH_MUTATIONS = {
     [AUTH_MUTATIONS.SET_USER] (state, { _id, email }) {
       state.id = _id
       state.email_address = email
+    },
+
+    // store the user views in the state
+    [AUTH_MUTATIONS.SET_VIEWS] (state, views) {
+      state.views = views
     },
   
     // store new or updated token fields in the state
@@ -35,6 +42,7 @@ export const AUTH_MUTATIONS = {
       state.email_address = null
       state.access_token = null
       state.refresh_token = null
+      state.views = []
     },
   }
   
@@ -49,20 +57,28 @@ export const AUTH_MUTATIONS = {
       // commit the user and tokens to the state
       commit(AUTH_MUTATIONS.SET_USER, user)
       commit(AUTH_MUTATIONS.SET_PAYLOAD, {access_token:token, refresh_token:refresh_token})
-    },
-  
-    async register ({ commit }, { email_address, password }) {
-      // make an API call to register the user
-      const { data: { data: { user, payload } } } = await this.$axios.post(
-        '/api/user/register', 
-        { email_address, password }
+
+      const { data } = await this.$axios.post(
+        '/api/user/getviews', 
+        { email }
       )
       
-      // commit the user and tokens to the state
-      commit(AUTH_MUTATIONS.SET_USER, user)
-      commit(AUTH_MUTATIONS.SET_PAYLOAD, payload)
+      // commit the user views to the state
+      commit(AUTH_MUTATIONS.SET_VIEWS, data)
     },
-  
+
+    async getviews ({ commit, state }) {
+      const {email_address} = state
+      // make an API call to getviews with an email address
+      const { data } = await this.$axios.post(
+        '/api/user/getviews', 
+        { email:email_address }
+      )
+      
+      // commit the user views to the state
+      commit(AUTH_MUTATIONS.SET_VIEWS, data)
+    },
+
     // given the current refresh token, refresh the user's access token to prevent expiry
     async refresh ({ commit, state }) {
       const old_refresh_token = state.refresh_token;
@@ -92,5 +108,8 @@ export const AUTH_MUTATIONS = {
     // determine if the user is authenticated based on the presence of the access token
     isAuthenticated: (state) => {
       return state.access_token !== null && state.access_token !== '' ? true : false
+    },
+    views: (state) => {
+      return state.views
     },
   }

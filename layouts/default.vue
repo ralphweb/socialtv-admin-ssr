@@ -5,11 +5,12 @@
           <img src="/iso.png" class="legalRecLogo"><h1 class="ml-2">Admin</h1>
       </a>
       <div class="navbar-container flex-grow-1">
-        <router-link :to="view.path" v-for="(view,v) in views" v-bind:key="v" v-bind:class="{'admin':view.isAdmin}"><small v-if="view.isAdmin">Admin</small>{{view.name}}</router-link>
-        <a @click="logout" class="session ml-auto">Cerrar Sesión</a>
+        <nuxt-link :to="view.path" v-for="(view,v) in views" v-bind:key="v" v-bind:class="{'admin':view.isAdmin}"><small v-if="view.isAdmin">Admin</small>{{view.name}}</nuxt-link>
+        <a @click="logout" class="session ml-auto" v-if="isAuthenticated">Cerrar Sesión</a>
+        <nuxt-link to="/login" class="session ml-auto" v-if="!isAuthenticated">Iniciar Sesión</nuxt-link>
       </div>
     </div>
-    <router-view/>
+    <Nuxt />
   </div>
 </template>
 
@@ -31,22 +32,18 @@ export default {
     }
   },
   computed: {
-    user: {
-        get() {
-            return this.$store.state.user;
-        },
-        set(value) {
-            this.$store.commit('SET_USER', value);
-        }
+    isAuthenticated: {
+      get() {
+        const that = this;
+        return that.$store.getters['auth/isAuthenticated'];
+      }
     },
     views: {
-        get() {
-            return this.$store.state.views;
-        },
-        set(value) {
-            this.$store.commit('SET_VIEWS', value);
-        }
-    },
+      get() {
+        const that = this;
+        return that.$store.getters['auth/views'];
+      }
+    }
   }
 }
 </script>
@@ -131,7 +128,7 @@ body
         background-color: #555;
       }
 
-      &.router-link-exact-active {
+      &.nuxt-link-exact-active {
         color: $maincolor;
       }
     }
