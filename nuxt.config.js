@@ -1,15 +1,22 @@
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
+  server: {
+    port: 3000 // default: 3000
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'socialtv-admin-ssr',
+    title: 'SocialTV | Admin',
+    htmlAttrs: {
+      lang: 'es'
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
+      //{ "http-equiv": 'Content-Security-Policy', content: "default-src 'self' 'unsafe-eval' 'unsafe-inline' *.miguru.ai *.googletagmanager.com *.lablab.cl localhost:* *.hotjar.com *.google-analytics.com wss:; script-src 'self' localhost:* *.lablab.cl *.miguru.ai *.googletagmanager.com *.hotjar.com *.google-analytics.com localhost:* 'unsafe-eval' 'unsafe-inline'" },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -46,7 +53,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost:4100', // Used as fallback if no runtime config is provided
+    baseURL: 'http://socialtv-admin.social-hound.com', // Used as fallback if no runtime config is provided
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

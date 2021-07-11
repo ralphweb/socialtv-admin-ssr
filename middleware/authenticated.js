@@ -9,7 +9,6 @@ export default function ({ store, redirect, route, router }) {
             views.push('/');
             views.push('/login');
             views.push('/admin');
-            console.log(views);
             if(!views.includes(route.path)) {
                 return redirect('/login')
             }
