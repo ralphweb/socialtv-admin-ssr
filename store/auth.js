@@ -67,6 +67,28 @@ export const AUTH_MUTATIONS = {
       commit(AUTH_MUTATIONS.SET_VIEWS, data)
     },
 
+    async googleAuth({commit, dispatch},{email,name,lastName}){
+      // make an API call to login the user with an email address and password
+      const { data: {  user, token, refresh_token  } } = await this.$axios.post(
+        '/api/user/createOrGetUser', 
+        { email,name,lastName }
+      )
+      
+      commit(AUTH_MUTATIONS.SET_USER, user)
+      commit(AUTH_MUTATIONS.SET_PAYLOAD, {access_token:token, refresh_token:refresh_token})
+
+      const { data } = await this.$axios.post(
+        '/api/user/getviews', 
+        { email }
+      )
+      
+      // commit the user views to the state
+      commit(AUTH_MUTATIONS.SET_VIEWS, data)
+
+    },
+
+
+
     async getviews ({ commit, state }) {
       const {email_address} = state
       // make an API call to getviews with an email address
