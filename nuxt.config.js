@@ -45,12 +45,17 @@ export default {
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
     // https://go.nuxtjs.dev/pwa
-    "@nuxtjs/pwa"
+    "@nuxtjs/pwa",
+    // https://www.npmjs.com/package/vue-sweetalert2
+    "vue-sweetalert2/nuxt"
   ],
 
+  bootstrapVue: {
+    icons: true
+  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://socialtv-admin.social-hound.com',// Used as fallback if no runtime config is provided
+    baseURL: "http://socialtv-admin.social-hound.com" // Used as fallback if no runtime config is provided
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
