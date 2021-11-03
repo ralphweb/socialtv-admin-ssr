@@ -3,7 +3,7 @@ import GAuth from "vue-google-oauth2";
 
 const gauthOption = {
   clientId:
-    "1016340779938-66k7ck6a6143dhtv05nqjaic3mri9let.apps.googleusercontent.com",
+    "1016340779938-fccotens1rit6j4mm72l5qbu6mjqu902.apps.googleusercontent.com",
   scope: "profile email",
   prompt: "select_account"
 };

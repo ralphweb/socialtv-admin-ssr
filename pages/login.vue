@@ -101,8 +101,15 @@ export default {
     },
     async googleAuth() {
       try {
+        console.log("llamando a googleAuth");
         const that = this;
         const googleUser = await this.$gAuth.signIn();
+        console.log(googleUser);
+        console.log(
+          googleUser.getBasicProfile().getEmail(),
+          googleUser.getBasicProfile().getName(),
+          googleUser.getBasicProfile().getGivenName()
+        );
         await that.$store.dispatch("auth/googleAuth", {
           email: googleUser.getBasicProfile().getEmail(),
           name: googleUser.getBasicProfile().getName(),
