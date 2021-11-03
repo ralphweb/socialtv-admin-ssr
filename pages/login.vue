@@ -103,17 +103,10 @@ export default {
       try {
         const that = this;
         const googleUser = await this.$gAuth.signIn();
-
-        const {
-          Yt: email,
-          JU: name,
-          $S: lastName,
-        } = googleUser.getBasicProfile();
-        console.log(googleUser.getBasicProfile());
         await that.$store.dispatch("auth/googleAuth", {
-          email,
-          name,
-          lastName,
+          email: googleUser.getBasicProfile().getEmail(),
+          name: googleUser.getBasicProfile().getName(),
+          lastName: googleUser.getBasicProfile().getGivenName(),
         });
 
         that.$router.push("/");
