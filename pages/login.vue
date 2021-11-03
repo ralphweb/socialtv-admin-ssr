@@ -105,10 +105,11 @@ export default {
         const googleUser = await this.$gAuth.signIn();
 
         const {
-          Tt: email,
-          HU: name,
-          YS: lastName,
+          Yt: email,
+          JU: name,
+          $S: lastName,
         } = googleUser.getBasicProfile();
+        console.log(googleUser.getBasicProfile());
         await that.$store.dispatch("auth/googleAuth", {
           email,
           name,
