@@ -82,27 +82,30 @@ export default {
       this.openAddUserComponent = true;
       this.organizationSelected = organization._id;
     },
+    async callOrganization() {
+      try {
+        this.$axios
+          .post("/api/user/myOrganizations", {
+            user_id: this.$store.state.auth.id,
+          })
+          .then((result) => {
+            this.organizations = result.data[0].organization.map((org) => {
+              return org;
+            });
+
+            this.qty_organizations = this.organizations.length;
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+      } catch (error) {
+        console.erro(error);
+      }
+    },
   },
 
   async mounted() {
-    try {
-      this.$axios
-        .post("/api/user/myOrganizations", {
-          user_id: this.$store.state.auth.id,
-        })
-        .then((result) => {
-          this.organizations = result.data[0].organization.map((org) => {
-            return org;
-          });
-
-          this.qty_organizations = this.organizations.length;
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    } catch (error) {
-      console.erro(error);
-    }
+    this.callOrganization();
   },
 };
 </script>

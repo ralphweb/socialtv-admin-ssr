@@ -151,6 +151,7 @@ export default {
               );
               this.resetForm();
               this.$bvModal.hide("organization-create");
+              this.$parent.callOrganization();
             })
             .catch(() => {
               this.$swal.fire(

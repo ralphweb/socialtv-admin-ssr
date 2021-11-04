@@ -340,6 +340,7 @@ export default {
               );
               this.resetForm();
               this.$bvModal.hide("plans-create-plan");
+              this.$parent.callPlans();
             })
             .catch(() => {
               this.$swal.fire(

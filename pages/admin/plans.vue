@@ -200,20 +200,23 @@ export default {
         (page_number + 1) * page_size
       );
     },
+    callPlans() {
+      this.$axios
+        .get("/api/plan")
+        .then((result) => {
+          if (result.data.length > 0) {
+            this.items = result.data;
+            this.totalRows = result.data.length;
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
   },
 
   async mounted() {
-    this.$axios
-      .get("/api/plan")
-      .then((result) => {
-        if (result.data.length > 0) {
-          this.items = result.data;
-          this.totalRows = result.data.length;
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    this.callPlans();
   },
 };
 </script>
