@@ -56,6 +56,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL: "http://socialtv-admin.social-hound.com" // Used as fallback if no runtime config is provided
+    //baseURL: "http://localhost:4100"
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -71,6 +72,14 @@ export default {
   },
   buildDir: "_nuxt",
   build: {
-    publicPath: "_nuxt/dist/"
+    publicPath: "_nuxt/dist/",
+    terser: {
+      // https://github.com/terser/terser#compress-options
+      terserOptions: {
+        compress: {
+          drop_console: false
+        }
+      }
+    }
   }
 };
