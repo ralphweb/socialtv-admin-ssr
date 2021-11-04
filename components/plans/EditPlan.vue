@@ -64,7 +64,7 @@
           <b-col cols="6">
             <b-form-group
               id="max_rooms-plan"
-              label="máximo de salas por plan"
+              label="Máximo de salas por plan"
               label-for="max_rooms-plan-1"
             >
               <b-input-group prepend="N°">
@@ -89,7 +89,7 @@
           <b-col cols="6">
             <b-form-group
               id="max_users-plan"
-              label="máximo de usuarios por plan"
+              label="Máximo de usuarios por plan"
               label-for="max_users-plan-1"
             >
               <b-input-group prepend="N°">
@@ -101,7 +101,7 @@
                   v-validate="{ required: true, min: 1, max: 6, numeric: true }"
                   aria-describedby="input-1-live-feedback"
                   :state="validateState('max_users-plan-1')"
-                  data-vv-as="máximo de usuarios"
+                  data-vv-as="Máximo de usuarios"
                 ></b-form-input>
               </b-input-group>
 
@@ -114,7 +114,7 @@
           <b-col cols="6">
             <b-form-group
               id="max_participants-plan"
-              label="máximo de participantes por plan"
+              label="Máximo de participantes por plan"
               label-for="max_participants-plan-1"
             >
               <b-input-group prepend="N°">
@@ -126,7 +126,7 @@
                   v-validate="{ required: true, min: 1, max: 6, numeric: true }"
                   aria-describedby="input-1-live-feedback"
                   :state="validateState('max_participants-plan-1')"
-                  data-vv-as="máximo de participantes"
+                  data-vv-as="Máximo de participantes"
                 ></b-form-input>
               </b-input-group>
 
@@ -140,7 +140,7 @@
           <b-col cols="6">
             <b-form-group
               id="max_scenes-plan"
-              label="máximo de escenas por plan"
+              label="Máximo de escenas por plan"
               label-for="max_scenes-plan-1"
             >
               <b-input-group prepend="N°">
@@ -152,7 +152,7 @@
                   v-validate="{ required: true, min: 1, max: 6, numeric: true }"
                   aria-describedby="input-1-live-feedback"
                   :state="validateState('max_scenes-plan-1')"
-                  data-vv-as="máximo de escenas"
+                  data-vv-as="Máximo de escenas"
                 ></b-form-input>
               </b-input-group>
               <b-form-invalid-feedback id="input-1-live-feedback">{{
@@ -164,7 +164,7 @@
           <b-col cols="6">
             <b-form-group
               id="max_gsc-plan"
-              label="máximo de gsc por plan"
+              label="Máximo de gsc por plan"
               label-for="max_gsc-plan-1"
             >
               <b-input-group prepend="N°">
@@ -176,7 +176,7 @@
                   v-validate="{ required: true, min: 1, max: 6, numeric: true }"
                   aria-describedby="input-1-live-feedback"
                   :state="validateState('max_gsc-plan-1')"
-                  data-vv-as="máximo de gsc"
+                  data-vv-as="Máximo de gsc"
                 ></b-form-input>
               </b-input-group>
 
@@ -190,7 +190,7 @@
           <b-col cols="6">
             <b-form-group
               id="max_polls-plan"
-              label="máximo de encuestas por plan"
+              label="Máximo de encuestas por plan"
               label-for="max_polls-plan-1"
             >
               <b-input-group prepend="N°">
@@ -202,7 +202,7 @@
                   v-validate="{ required: true, min: 1, max: 6, numeric: true }"
                   aria-describedby="input-1-live-feedback"
                   :state="validateState('max_polls-plan-1')"
-                  data-vv-as="máximo de encuestas"
+                  data-vv-as="Máximo de encuestas"
                 ></b-form-input>
               </b-input-group>
               <b-form-invalid-feedback id="input-1-live-feedback">{{
@@ -214,7 +214,7 @@
           <b-col cols="6">
             <b-form-group
               id="max_multimedia-plan"
-              label="máximo de multimedia por plan"
+              label="Máximo de multimedia por plan"
               label-for="max_multimedia-plan-1"
             >
               <b-input-group prepend="N°">
@@ -226,7 +226,7 @@
                   v-validate="{ required: true, min: 1, max: 6, numeric: true }"
                   aria-describedby="input-1-live-feedback"
                   :state="validateState('max_multimedia-plan-1')"
-                  data-vv-as="máximo de multimedia"
+                  data-vv-as="Máximo de multimedia"
                 ></b-form-input>
               </b-input-group>
               <b-form-invalid-feedback id="input-1-live-feedback">{{
@@ -264,7 +264,7 @@
             variant="danger"
             @click="$bvModal.hide('plans-edit-plan')"
           >
-            Close
+            Ceerar
           </b-btn>
 
           <b-button

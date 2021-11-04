@@ -90,7 +90,7 @@
             variant="danger"
             @click="$bvModal.hide('organization-create')"
           >
-            Close
+            Cerrar
           </b-btn>
 
           <b-button

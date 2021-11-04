@@ -56,7 +56,7 @@
       </b-col>
       <div slot="modal-footer">
         <b-btn class="float-right" variant="danger" @click="closeModal()">
-          Close
+          Cerrar
         </b-btn>
       </div>
     </b-modal>
