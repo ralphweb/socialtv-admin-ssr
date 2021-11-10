@@ -293,7 +293,7 @@ export default {
     };
   },
   methods: {
-    //the next function is for create a plan
+    //the next function is for edit a plan
     async editPlan() {
       this.$validator.validateAll().then(async (result) => {
         if (result) {

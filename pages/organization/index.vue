@@ -32,7 +32,16 @@
           style="max-width: 20rem"
         >
           <b-card-text> </b-card-text>
+
           <b-button-group size="sm">
+            <b-button
+              variant="warning"
+              v-if="org.owner_id === user_id"
+              @click="edit(org)"
+              class="mr-2"
+            >
+              <b-icon icon="pencil"></b-icon>Editar</b-button
+            >
             <b-button
               variant="warning"
               v-if="org.owner_id === user_id"
@@ -51,17 +60,21 @@
     <!--Call Componentes--->
     <createOrganization />
     <addUsers v-if="openAddUserComponent" :data="organizationSelected" />
+
+    <editOrganization :organization="organizationForEdit" />
   </div>
 </template>
 
 <script>
 import createOrganization from "./../../components/organizations/CreateOrganization.vue";
 import addUsers from "./../../components/organizations/AddUserToOrganization.vue";
+import editOrganization from "./../../components/organizations/EditOrganization.vue";
 export default {
   middleware: "authenticated",
   components: {
     createOrganization,
     addUsers,
+    editOrganization,
   },
   data() {
     return {
@@ -69,6 +82,9 @@ export default {
       qty_organizations: null,
       user_id: this.$store.state.auth.id,
 
+      //for edit
+      organizationForEdit: null,
+      // for add user
       openAddUserComponent: false,
       organizationSelected: false,
     };
@@ -78,9 +94,13 @@ export default {
       this.$router.push("/organizacion/organization");
     },
     showAddUser(organization) {
-      this.$bvModal.show("add-users-modal");
       this.openAddUserComponent = true;
       this.organizationSelected = organization._id;
+      this.$bvModal.show("add-users-modal");
+    },
+    edit(organization) {
+      this.organizationForEdit = organization;
+      this.$bvModal.show("organization-edit");
     },
     async callOrganization() {
       try {
