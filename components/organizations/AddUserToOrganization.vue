@@ -6,56 +6,62 @@
       id="add-users-modal"
       title="Añadir o quitar usuarios"
     >
-      <!-- List of usuario out organization-->
-      <b-col cols="12">
-        <b-form-group
-          id="list-of-user"
-          label="Usuarios fuera de la organización"
-          label-for="list-of-user-1"
-        >
-          <b-input-group prepend="Usuarios">
-            <b-form-select
-              id="active-1"
-              v-model="userOutOrganization"
-              :options="listUserOutOrganization"
-              required
-            ></b-form-select>
-            <b-button
-              class="ml-4"
-              variant="warning"
-              @click="addUser(userOutOrganization)"
-              :disabled="userOutOrganization == null"
-              >Añadir usuario</b-button
-            >
-          </b-input-group>
-        </b-form-group>
-      </b-col>
-      <!-- List of usuario inside organization-->
-      <b-col cols="12">
-        <b-form-group
-          id="list-of-user"
-          label="Usuarios que pertenecen a la organización"
-          label-for="list-of-user-1"
-        >
-          <b-input-group prepend="usuarios">
-            <b-form-select
-              id="active-1"
-              v-model="userInsideOrgnization"
-              :options="listUserInsideOrganization"
-              required
-            ></b-form-select>
-            <b-button
-              class="ml-4"
-              variant="warning"
-              @click="deleteUser(userInsideOrgnization)"
-              :disabled="userInsideOrgnization == null"
-              >Eliminar usuario
-            </b-button>
-          </b-input-group>
-        </b-form-group>
-      </b-col>
+      <b-row v-if="data != null">
+        <!-- List of usuario out organization-->
+        <b-col cols="12">
+          <b-form-group
+            id="list-of-user"
+            label="Usuarios fuera de la organización"
+            label-for="list-of-user-1"
+          >
+            <b-input-group prepend="Usuarios">
+              <b-form-select
+                id="active-1"
+                v-model="userOutOrganization"
+                :options="listUserOutOrganization"
+                required
+              ></b-form-select>
+              <b-button
+                class="ml-4"
+                variant="warning"
+                @click="addUser(userOutOrganization)"
+                :disabled="userOutOrganization == null"
+                >Añadir usuario</b-button
+              >
+            </b-input-group>
+          </b-form-group>
+        </b-col>
+        <!-- List of usuario inside organization-->
+        <b-col cols="12">
+          <b-form-group
+            id="list-of-user"
+            label="Usuarios que pertenecen a la organización"
+            label-for="list-of-user-1"
+          >
+            <b-input-group prepend="usuarios">
+              <b-form-select
+                id="active-1"
+                v-model="userInsideOrgnization"
+                :options="listUserInsideOrganization"
+                required
+              ></b-form-select>
+              <b-button
+                class="ml-4"
+                variant="warning"
+                @click="deleteUser(userInsideOrgnization)"
+                :disabled="userInsideOrgnization == null"
+                >Eliminar usuario
+              </b-button>
+            </b-input-group>
+          </b-form-group>
+        </b-col>
+      </b-row>
       <div slot="modal-footer">
-        <b-btn class="float-right" variant="danger" @click="closeModal()">
+        <b-btn
+          class="float-right"
+          variant="danger"
+          @click="$bvModal.hide('add-users-modal')"
+        >
           Cerrar
         </b-btn>
       </div>

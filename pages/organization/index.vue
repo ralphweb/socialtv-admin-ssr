@@ -59,7 +59,7 @@
 
     <!--Call Componentes--->
     <createOrganization />
-    <addUsers v-if="openAddUserComponent" :data="organizationSelected" />
+    <addUsers :data="organizationSelected" />
 
     <editOrganization :organization="organizationForEdit" />
   </div>
@@ -94,7 +94,6 @@ export default {
       this.$router.push("/organizacion/organization");
     },
     showAddUser(organization) {
-      this.openAddUserComponent = true;
       this.organizationSelected = organization._id;
       this.$bvModal.show("add-users-modal");
     },

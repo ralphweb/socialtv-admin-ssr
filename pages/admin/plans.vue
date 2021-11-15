@@ -89,7 +89,7 @@
 
     <!--Call Componentes--->
     <createplan />
-    <editPlan v-if="openModalEdit" :dataPlan="planEdit" />
+    <editPlan :dataPlan="planEdit" />
   </div>
 </template>
 
@@ -105,7 +105,6 @@ export default {
   data() {
     return {
       planEdit: null,
-      openModalEdit: false,
       fields: [
         { key: "name", label: "Nombre", sortable: true },
         { key: "active", label: "Activo", sortable: true },
@@ -185,7 +184,6 @@ export default {
     },
     showModalEdit(dataPlan) {
       this.planEdit = dataPlan.item;
-      this.openModalEdit = true;
       this.$bvModal.show("plans-edit-plan");
     },
 
