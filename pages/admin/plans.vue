@@ -88,8 +88,10 @@
     <!--[END] table Plans-->
 
     <!--Call Componentes--->
-    <createplan />
-    <editPlan :dataPlan="planEdit" />
+    <b-row>
+      <createplan />
+      <editPlan :dataPlan="planEdit" />
+    </b-row>
   </div>
 </template>
 

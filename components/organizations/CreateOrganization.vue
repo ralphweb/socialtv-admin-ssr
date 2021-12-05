@@ -74,14 +74,77 @@
                 aria-describedby="input-3-live-feedback"
                 data-vv-as="Plan"
               ></b-form-select>
-              <b-button class="" variant="warning" @click="showPlanDetails()"
-                >Ver detalle del plan</b-button
-              >
 
               <b-form-invalid-feedback id="input-3-live-feedback">{{
                 veeErrors.first("example-input-3")
               }}</b-form-invalid-feedback>
             </b-form-group>
+          </b-col>
+          <!-- Show plan selected--->
+          <b-col v-if="dataOrganization.plan != ''">
+            <div class="mt-2">
+              <!-- card 1 -->
+              <b-card
+                :header="dataOrganization.plan.name"
+                align="center"
+                tag="article"
+                style="max-width: auto"
+                class="mb-5 mt-2"
+              >
+                <br />
+                <b-card-text
+                  >Precio: USD ${{
+                    dataOrganization.plan.promo > 0
+                      ? dataOrganization.plan.price -
+                        dataOrganization.plan.price *
+                          (dataOrganization.plan.promo / 100)
+                      : dataOrganization.plan.price
+                  }}
+                </b-card-text>
+
+                <b-list-group flush>
+                  <b-list-group-item>
+                    <b-icon-people class="h5 mr-2 mb-0 mt-0"></b-icon-people
+                    >Cantidad de usuarios :
+                    {{ dataOrganization.plan.max_users }}
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <b-icon-people class="h5 mr-2 mb-0 mt-0"></b-icon-people
+                    >Cantidad de participantes :
+                    {{ dataOrganization.plan.max_participants }}
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <b-icon-film class="h5 mr-2 mb-0 mt-0"></b-icon-film
+                    >Cantidad de salas : {{ dataOrganization.plan.max_rooms }}
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <b-icon-film class="h5 mr-2 mb-0 mt-0"></b-icon-film
+                    >Cantidad de escenas :
+                    {{ dataOrganization.plan.max_scenes }}
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <b-icon-badge-ad class="h5 mr-2 mb-0 mt-0"></b-icon-badge-ad
+                    >Cantidad de gsc : {{ dataOrganization.plan.max_gsc }}
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <b-icon-badge4k class="h5 mr-2 mb-0 mt-0"></b-icon-badge4k
+                    >Cantidad de multimedia :
+                    {{ dataOrganization.plan.max_multimedia }}
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <b-icon-card-checklist
+                      class="h5 mr-2 mb-0 mt-0"
+                    ></b-icon-card-checklist
+                    >Cantidad de encuestas :
+                    {{ dataOrganization.plan.max_polls }}
+                  </b-list-group-item>
+                  <b-list-group-item></b-list-group-item>
+                </b-list-group>
+                <br />
+
+                <br />
+              </b-card>
+            </div>
           </b-col>
         </b-row>
         <div slot="modal-footer">
@@ -131,7 +194,7 @@ export default {
       },
 
       //plans
-      dataPlans: [],
+      dataPlans: [{ text: " ", value: "" }],
       activePlanDetails: false,
     };
   },
@@ -194,13 +257,8 @@ export default {
       .then((result) => {
         if (result.data.length > 0) {
           result.data.forEach((plan) => {
-            console.log(plan.price * (plan.promo / 100));
-            let newPrice =
-              plan.promo > 0
-                ? plan.price - plan.price * (plan.promo / 100)
-                : plan.price;
             this.dataPlans.push({
-              text: `Plan: ${plan.name}, precio : ${newPrice}, usuarios : ${plan.max_users}`,
+              text: `Plan: ${plan.name}`,
               value: plan,
             });
           });
@@ -266,6 +324,15 @@ export default {
       border: none;
       color: white;
     }
+  }
+  .card {
+    background-color: #141414 !important;
+    color: #ddd;
+    border: 1px solid #333;
+  }
+
+  .list-group {
+    color: #000;
   }
 
   .pass {

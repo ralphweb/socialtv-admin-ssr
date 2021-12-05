@@ -1,6 +1,6 @@
 <template>
   <div class="admin p-4">
-    <h2 class="text-light">Organizaciones</h2>
+    <h2 v-bind:class="{ 'text-light': true }">Organizaciones</h2>
     <!--Alertas -->
     <b-row v-if="qty_organizations === null">
       <b-col cols="4">
@@ -16,52 +16,102 @@
           >Crear organización</b-button
         >
       </b-col>
+      <b-col lg="6" v-bind:class="{ 'my-3': true }">
+        <b-form-group
+          label=""
+          label-for="filter-input"
+          label-cols-sm="12"
+          label-align-sm="left"
+          label-size="sm"
+          class="mb-0"
+        >
+          <b-input-group size="sm">
+            <b-form-input
+              id="filter-input"
+              v-model="filter"
+              type="search"
+              placeholder="Filtrar por organización"
+            ></b-form-input>
+
+            <b-input-group-append>
+              <b-button :disabled="!filter" @click="filter = ''"
+                >Limpiar</b-button
+              >
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
+      </b-col>
     </b-row>
 
     <b-row>
-      <b-col cols="12">
-        <h2 class="text-light">Tus organizaciones</h2>
-      </b-col>
-      <b-col lg="4" sm="12" v-for="org in organizations" :key="org._id">
-        <b-card
-          class="text-light mb-2"
-          bg-variant="dark"
-          :header="org.name"
-          img-top
-          tag="article"
-          style="max-width: 20rem"
+      <b-col cols="12" v-bind:class="{ 'my-3': true }">
+        <b-table
+          id="list-plan-table"
+          striped
+          dark
+          hover
+          :filter="filter"
+          :items="organizations"
+          :fields="fields"
+          :per-page="perPage"
+          :current-page="currentPage"
+          @filtered="onFiltered"
         >
-          <b-card-text> </b-card-text>
+          >
+          <!--Active o inactive plan-->
+          <template #cell(active)="row">
+            <toggle-button
+              v-model="row.item.active"
+              color="#FF007A"
+              :sync="true"
+              :labels="{ checked: 'Activo', unchecked: 'Inactivo' }"
+              :width="80"
+              @change="saveToggle(row.item._id, 'active', row.item.active)"
+            />
+          </template>
 
-          <b-button-group size="sm">
-            <b-button
-              variant="warning"
-              v-if="org.owner_id === user_id"
-              @click="edit(org)"
-              class="mr-2"
-            >
-              <b-icon icon="pencil"></b-icon>Editar</b-button
-            >
-            <b-button
-              variant="warning"
-              v-if="org.owner_id === user_id"
-              @click="showAddUser(org)"
-            >
-              <b-icon icon="plus"></b-icon>Añadir Usuarios</b-button
-            >
-            <b-button class="ml-2" variant="info" @click="showOrganization">
-              <b-icon icon="door-open"></b-icon>Ingresar organización</b-button
-            >
-          </b-button-group>
-        </b-card>
+          <!--Active o inactive plan-->
+          <template #cell(actions)="row">
+            <b-button-group size="sm">
+              <b-button
+                variant="warning"
+                v-if="row.item.owner_id === user_id"
+                @click="edit(row.item)"
+                class="mr-2"
+              >
+                <b-icon icon="pencil"></b-icon>Editar</b-button
+              >
+              <b-button
+                variant="warning"
+                v-if="row.item.owner_id === user_id"
+                @click="showAddUser(row.item)"
+              >
+                <b-icon icon="plus"></b-icon>Añadir Usuarios</b-button
+              >
+              <b-button class="ml-2" variant="info" @click="showOrganization">
+                <b-icon icon="door-open"></b-icon>Ingresar
+                organización</b-button
+              >
+            </b-button-group>
+          </template>
+        </b-table>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          align="center"
+          v-bind:class="{ 'my-0': true }"
+        ></b-pagination>
       </b-col>
     </b-row>
 
-    <!--Call Componentes--->
-    <createOrganization />
-    <addUsers :data="organizationSelected" />
+    <b-row>
+      <!--Call Componentes--->
 
-    <editOrganization :organization="organizationForEdit" />
+      <createOrganization />
+      <addUsers :data="organizationSelected" />
+      <editOrganization :organization="organizationForEdit" />
+    </b-row>
   </div>
 </template>
 
@@ -87,6 +137,17 @@ export default {
       // for add user
       openAddUserComponent: false,
       organizationSelected: false,
+
+      //table
+      filter: null,
+      perPage: 5,
+      currentPage: 1,
+      totalRows: 1,
+      fields: [
+        { key: "actions", label: "Acciones", sortable: false },
+        { key: "name", label: "Nombre de la organización", sortable: true },
+        { key: "active", label: "Activo", sortable: true },
+      ],
     };
   },
   methods: {
@@ -113,6 +174,7 @@ export default {
             });
 
             this.qty_organizations = this.organizations.length;
+            this.totalRows = this.organizations.length;
           })
           .catch((e) => {
             console.error(e);
@@ -120,6 +182,33 @@ export default {
       } catch (error) {
         console.erro(error);
       }
+    },
+    async saveToggle(id, field, value) {
+      let newValues = {};
+      newValues[field] = value;
+      const response = await this.$axios.put(
+        "/api/organization/" + id,
+        newValues
+      );
+      if (response.status === 200) {
+        this.$swal.fire(
+          "Excelente!",
+          "Organización actualizado de manera correcta",
+          "success"
+        );
+      } else {
+        this.$swal.fire(
+          "Ups!",
+          "No se pudo actualizar la organización... contacta al administrador",
+          "info"
+        );
+      }
+    },
+
+    onFiltered(filteredItems) {
+      console.log(filteredItems);
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
     },
   },
 
@@ -132,4 +221,37 @@ export default {
 
 <style lang="scss">
 @import "@/imports/variables";
+
+.table > :not(caption) > * > * {
+  vertical-align: middle;
+  position: relative;
+}
+
+.pagination {
+  .page-item {
+    .page-link {
+      background-color: #212529;
+      border-color: #2e3338;
+      color: white;
+    }
+
+    &.active {
+      .page-link {
+        background-color: #2e3338;
+        border-color: #2e3338;
+        color: $maincolor;
+      }
+    }
+  }
+}
+.scroll-off {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  max-height: 100vh;
+  overflow: hidden;
+  padding-bottom: 1px;
+}
 </style>
