@@ -194,7 +194,7 @@ export default {
       },
 
       //plans
-      dataPlans: [{ text: " ", value: "" }],
+      dataPlans: [],
       activePlanDetails: false,
     };
   },
