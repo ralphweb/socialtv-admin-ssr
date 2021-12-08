@@ -59,46 +59,40 @@
 
           <!--Select one plan-->
           <b-col cols="12">
-            <b-form-group
-              id="example-input-3"
-              label="Seleccione un plan"
-              label-for="example-input-3"
-            >
-              <b-form-select
-                id="active-1"
-                name="example-input-3"
-                v-model="dataOrganization.plan"
-                :options="dataPlans"
-                v-validate="{ required: true }"
-                :state="validateState('example-input-3')"
-                aria-describedby="input-3-live-feedback"
-                data-vv-as="Plan"
-              ></b-form-select>
-
+            <b-form-group id="example-input-3" label-for="example-input-3">
               <b-form-invalid-feedback id="input-3-live-feedback">{{
                 veeErrors.first("example-input-3")
               }}</b-form-invalid-feedback>
             </b-form-group>
           </b-col>
           <!-- Show plan selected--->
-          <b-col v-if="dataOrganization.plan != ''">
-            <div class="mt-2">
-              <!-- card 1 -->
+
+          <b-col style="overflow-x: scroll">
+            <!-- card 1 -->
+            <b-card-group
+              deck
+              label="Seleccione un plan"
+              class="col-md-12"
+              v-for="plan in dataPlans"
+              :key="plan._id"
+            >
               <b-card
-                :header="dataOrganization.plan.name"
+                :key="plan._id"
+                :border-variant="
+                  dataOrganization.plan != '' &&
+                  dataOrganization.plan._id == plan._id
+                    ? 'success'
+                    : ''
+                "
+                :header="plan.name"
                 align="center"
-                tag="article"
-                style="max-width: auto"
                 class="mb-5 mt-2"
               >
-                <br />
                 <b-card-text
                   >Precio: USD ${{
-                    dataOrganization.plan.promo > 0
-                      ? dataOrganization.plan.price -
-                        dataOrganization.plan.price *
-                          (dataOrganization.plan.promo / 100)
-                      : dataOrganization.plan.price
+                    plan.promo > 0
+                      ? plan.price - plan.price * (plan.promo / 100)
+                      : plan.price
                   }}
                 </b-card-text>
 
@@ -106,48 +100,54 @@
                   <b-list-group-item>
                     <b-icon-people class="h5 mr-2 mb-0 mt-0"></b-icon-people
                     >Cantidad de usuarios :
-                    {{ dataOrganization.plan.max_users }}
+                    {{ plan.max_users }}
                   </b-list-group-item>
                   <b-list-group-item>
                     <b-icon-people class="h5 mr-2 mb-0 mt-0"></b-icon-people
                     >Cantidad de participantes :
-                    {{ dataOrganization.plan.max_participants }}
+                    {{ plan.max_participants }}
                   </b-list-group-item>
                   <b-list-group-item>
                     <b-icon-film class="h5 mr-2 mb-0 mt-0"></b-icon-film
-                    >Cantidad de salas : {{ dataOrganization.plan.max_rooms }}
+                    >Cantidad de salas : {{ plan.max_rooms }}
                   </b-list-group-item>
                   <b-list-group-item>
                     <b-icon-film class="h5 mr-2 mb-0 mt-0"></b-icon-film
                     >Cantidad de escenas :
-                    {{ dataOrganization.plan.max_scenes }}
+                    {{ plan.max_scenes }}
                   </b-list-group-item>
                   <b-list-group-item>
                     <b-icon-badge-ad class="h5 mr-2 mb-0 mt-0"></b-icon-badge-ad
-                    >Cantidad de gsc : {{ dataOrganization.plan.max_gsc }}
+                    >Cantidad de gsc : {{ plan.max_gsc }}
                   </b-list-group-item>
                   <b-list-group-item>
                     <b-icon-badge4k class="h5 mr-2 mb-0 mt-0"></b-icon-badge4k
                     >Cantidad de multimedia :
-                    {{ dataOrganization.plan.max_multimedia }}
+                    {{ plan.max_multimedia }}
                   </b-list-group-item>
                   <b-list-group-item>
                     <b-icon-card-checklist
                       class="h5 mr-2 mb-0 mt-0"
                     ></b-icon-card-checklist
                     >Cantidad de encuestas :
-                    {{ dataOrganization.plan.max_polls }}
+                    {{ plan.max_polls }}
                   </b-list-group-item>
-                  <b-list-group-item></b-list-group-item>
+                  <b-list-group-item>
+                    <b-form-radio
+                      v-model="dataOrganization.plan"
+                      name="some-radios"
+                      :value="plan"
+                      size="lg"
+                      >Selecciona este plan</b-form-radio
+                    >
+                  </b-list-group-item>
                 </b-list-group>
                 <br />
-
-                <br />
               </b-card>
-            </div>
+            </b-card-group>
           </b-col>
         </b-row>
-        <div slot="modal-footer">
+        <div slot="modal-footer" class="modal-footer--sticky">
           <b-btn
             class="float-right"
             variant="danger"
@@ -257,10 +257,7 @@ export default {
       .then((result) => {
         if (result.data.length > 0) {
           result.data.forEach((plan) => {
-            this.dataPlans.push({
-              text: `Plan: ${plan.name}`,
-              value: plan,
-            });
+            this.dataPlans.push(plan);
           });
         }
       })
@@ -340,5 +337,19 @@ export default {
     padding: 15px;
     border-radius: 15px;
   }
+}
+
+.modal-body {
+  position: sticky;
+  top: 0;
+  background-color: inherit;
+  z-index: 1055;
+}
+
+.modal-footer {
+  position: sticky;
+  bottom: 0;
+  background-color: inherit;
+  z-index: 1055;
 }
 </style>
