@@ -67,7 +67,13 @@
           </b-col>
           <!-- Show plan selected--->
 
-          <b-col style="overflow-x: scroll">
+          <b-col
+            style="
+              height: 700px;
+              scrollbar-color: red yellow;
+              overflow-x: scroll;
+            "
+          >
             <!-- card 1 -->
             <b-card-group
               deck
@@ -301,6 +307,8 @@ export default {
   backdrop-filter: blur(5px);
 
   .modal-content {
+    scrollbar-color: white !important;
+    scrollbar-darkshadow-color: white;
     background-color: #141414 !important;
     color: #ddd;
     border: 1px solid #333;
