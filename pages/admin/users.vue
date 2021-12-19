@@ -253,7 +253,6 @@ export default {
             items:[],
             roles:[],
             fields: [
-                { key:'actions',label:'Acciones'},
                 { key:'name',label:'Nombre',sortable:true},
                 { key:'lastName',label:'Apellido',sortable:true},
                 { key:'email',label:'Correo electrónico',sortable:true},
@@ -262,6 +261,7 @@ export default {
                 { key:'allowsGmail',label:'Gmail',sortable:true},
                 { key:'active',label:'Activo',sortable:true},
                 { key:'online',label:'En línea',sortable:true},
+                { key:'actions',label:'Acciones'},
             ],
             perPage: 15,
             currentPage: 1,
