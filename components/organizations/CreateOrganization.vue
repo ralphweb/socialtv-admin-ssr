@@ -67,90 +67,104 @@
           </b-col>
           <!-- Show plan selected--->
 
-          <b-col
-            style="
-              height: 700px;
-              scrollbar-color: red yellow;
-              overflow-x: scroll;
-            "
-          >
-            <!-- card 1 -->
-            <b-card-group
-              deck
-              label="Seleccione un plan"
-              class="col-md-12"
-              v-for="plan in dataPlans"
-              :key="plan._id"
-            >
-              <b-card
-                :key="plan._id"
-                :border-variant="
-                  dataOrganization.plan != '' &&
-                  dataOrganization.plan._id == plan._id
-                    ? 'success'
-                    : ''
-                "
-                :header="plan.name"
-                align="center"
-                class="mb-5 mt-2"
-              >
-                <b-card-text
-                  >Precio: USD ${{
-                    plan.promo > 0
-                      ? plan.price - plan.price * (plan.promo / 100)
-                      : plan.price
-                  }}
-                </b-card-text>
+          <b-col cols="12">
+            <div style="overflow-y: auto">
+              <!-- card 1 -->
+              <b-card-group label="Seleccione un plan">
+                <b-card
+                  class="text-center ml-4"
+                  v-for="plan in dataPlans"
+                  :key="plan._id"
+                  :border-variant="
+                    dataOrganization.plan != '' &&
+                    dataOrganization.plan._id == plan._id
+                      ? 'success'
+                      : ''
+                  "
+                  :header="plan.name"
+                >
+                  <b-card-text
+                    ><p class="text-center">
+                      Precio: USD ${{
+                        plan.promo > 0
+                          ? plan.price - plan.price * (plan.promo / 100)
+                          : plan.price
+                      }}
+                    </p>
+                  </b-card-text>
 
-                <b-list-group flush>
-                  <b-list-group-item>
-                    <b-icon-people class="h5 mr-2 mb-0 mt-0"></b-icon-people
-                    >Cantidad de usuarios :
-                    {{ plan.max_users }}
-                  </b-list-group-item>
-                  <b-list-group-item>
-                    <b-icon-people class="h5 mr-2 mb-0 mt-0"></b-icon-people
-                    >Cantidad de participantes :
-                    {{ plan.max_participants }}
-                  </b-list-group-item>
-                  <b-list-group-item>
-                    <b-icon-film class="h5 mr-2 mb-0 mt-0"></b-icon-film
-                    >Cantidad de salas : {{ plan.max_rooms }}
-                  </b-list-group-item>
-                  <b-list-group-item>
-                    <b-icon-film class="h5 mr-2 mb-0 mt-0"></b-icon-film
-                    >Cantidad de escenas :
-                    {{ plan.max_scenes }}
-                  </b-list-group-item>
-                  <b-list-group-item>
-                    <b-icon-badge-ad class="h5 mr-2 mb-0 mt-0"></b-icon-badge-ad
-                    >Cantidad de gsc : {{ plan.max_gsc }}
-                  </b-list-group-item>
-                  <b-list-group-item>
-                    <b-icon-badge4k class="h5 mr-2 mb-0 mt-0"></b-icon-badge4k
-                    >Cantidad de multimedia :
-                    {{ plan.max_multimedia }}
-                  </b-list-group-item>
-                  <b-list-group-item>
-                    <b-icon-card-checklist
-                      class="h5 mr-2 mb-0 mt-0"
-                    ></b-icon-card-checklist
-                    >Cantidad de encuestas :
-                    {{ plan.max_polls }}
-                  </b-list-group-item>
-                  <b-list-group-item>
-                    <b-form-radio
-                      v-model="dataOrganization.plan"
-                      name="some-radios"
-                      :value="plan"
-                      size="lg"
-                      >Selecciona este plan</b-form-radio
-                    >
-                  </b-list-group-item>
-                </b-list-group>
-                <br />
-              </b-card>
-            </b-card-group>
+                  <b-list-group>
+                    <b-list-group-item class="d-flex justify-content-between">
+                      <span class="flex-fill text-left">
+                        <b-icon-people></b-icon-people>
+                        <span class="text-center ml-5">N° de usuarios :</span>
+                      </span>
+
+                      <span>{{ plan.max_users }}</span>
+                    </b-list-group-item>
+
+                    <b-list-group-item class="d-flex justify-content-between">
+                      <span class="flex-fill text-left">
+                        <b-icon-people></b-icon-people>
+                        <span class="text-center ml-5"
+                          >N° de participantes :</span
+                        >
+                      </span>
+
+                      <span>{{ plan.max_participants }}</span>
+                    </b-list-group-item>
+
+                    <b-list-group-item class="d-flex justify-content-between">
+                      <span class="flex-fill text-left">
+                        <b-icon-film></b-icon-film>
+                        <span class="text-center ml-5">N° de escenas :</span>
+                      </span>
+
+                      <span>{{ plan.max_scenes }}</span>
+                    </b-list-group-item>
+
+                    <b-list-group-item class="d-flex justify-content-between">
+                      <span class="flex-fill text-left">
+                        <b-icon-badge-ad></b-icon-badge-ad>
+                        <span class="text-center ml-5">N° de gsc :</span>
+                      </span>
+
+                      <span>{{ plan.max_gsc }}</span>
+                    </b-list-group-item>
+
+                    <b-list-group-item class="d-flex justify-content-between">
+                      <span class="flex-fill text-left">
+                        <b-icon-badge4k></b-icon-badge4k>
+                        <span class="text-center ml-5">N° de multimedia :</span>
+                      </span>
+
+                      <span>{{ plan.max_multimedia }}</span>
+                    </b-list-group-item>
+
+                    <b-list-group-item class="d-flex justify-content-between">
+                      <span class="flex-fill text-left">
+                        <b-icon-badge4k></b-icon-badge4k>
+                        <span class="text-center ml-5">N° de encuestas :</span>
+                      </span>
+
+                      <span>{{ plan.max_polls }}</span>
+                    </b-list-group-item>
+
+                    <b-list-group-item>
+                      <b-form-radio
+                        button
+                        button-variant="warning"
+                        v-model="dataOrganization.plan"
+                        name="some-radios"
+                        :value="plan"
+                        size="lg"
+                        >Selecciona este plan</b-form-radio
+                      >
+                    </b-list-group-item>
+                  </b-list-group>
+                </b-card>
+              </b-card-group>
+            </div>
           </b-col>
         </b-row>
         <div slot="modal-footer" class="modal-footer--sticky">
@@ -307,8 +321,6 @@ export default {
   backdrop-filter: blur(5px);
 
   .modal-content {
-    scrollbar-color: white !important;
-    scrollbar-darkshadow-color: white;
     background-color: #141414 !important;
     color: #ddd;
     border: 1px solid #333;
@@ -347,6 +359,14 @@ export default {
   }
 }
 
+.card-group {
+  width: 1900px;
+}
+
+.scrollable-element {
+  scrollbar-color: white !important;
+}
+
 .modal-body {
   position: sticky;
   top: 0;
@@ -359,5 +379,27 @@ export default {
   bottom: 0;
   background-color: inherit;
   z-index: 1055;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ffc107;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ffc107;
 }
 </style>

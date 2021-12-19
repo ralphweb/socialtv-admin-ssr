@@ -144,9 +144,10 @@ export default {
       currentPage: 1,
       totalRows: 1,
       fields: [
-        { key: "actions", label: "Acciones", sortable: false },
         { key: "name", label: "Nombre de la organización", sortable: true },
         { key: "active", label: "Activo", sortable: true },
+
+        { key: "actions", label: "Acciones", sortable: false },
       ],
     };
   },
