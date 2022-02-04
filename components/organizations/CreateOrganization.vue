@@ -75,10 +75,15 @@
                   class="text-center ml-4"
                   v-for="plan in dataPlans"
                   :key="plan._id"
-                  :border-variant="
+                  :header-bg-variant="
                     dataOrganization.plan != '' &&
                     dataOrganization.plan._id == plan._id
                       ? 'success'
+                      : ''
+                  "
+                  :style="
+                    dataOrganization.plan._id == plan._id
+                      ? 'border: 5px solid #ff007a'
                       : ''
                   "
                   :header="plan.name"
@@ -100,7 +105,13 @@
                         <span class="text-center ml-5">N° de usuarios :</span>
                       </span>
 
-                      <span>{{ plan.max_users }}</span>
+                      <span>
+                        <h5>
+                          <b-badge variant="primary">{{
+                            plan.max_users
+                          }}</b-badge>
+                        </h5>
+                      </span>
                     </b-list-group-item>
 
                     <b-list-group-item class="d-flex justify-content-between">
@@ -111,7 +122,13 @@
                         >
                       </span>
 
-                      <span>{{ plan.max_participants }}</span>
+                      <span>
+                        <h5>
+                          <b-badge variant="primary">{{
+                            plan.max_participants
+                          }}</b-badge>
+                        </h5>
+                      </span>
                     </b-list-group-item>
 
                     <b-list-group-item class="d-flex justify-content-between">
@@ -120,7 +137,13 @@
                         <span class="text-center ml-5">N° de escenas :</span>
                       </span>
 
-                      <span>{{ plan.max_scenes }}</span>
+                      <span>
+                        <h5>
+                          <b-badge variant="primary">{{
+                            plan.max_scenes
+                          }}</b-badge>
+                        </h5>
+                      </span>
                     </b-list-group-item>
 
                     <b-list-group-item class="d-flex justify-content-between">
@@ -129,7 +152,13 @@
                         <span class="text-center ml-5">N° de gsc :</span>
                       </span>
 
-                      <span>{{ plan.max_gsc }}</span>
+                      <span>
+                        <h5>
+                          <b-badge variant="primary">{{
+                            plan.max_gsc
+                          }}</b-badge>
+                        </h5>
+                      </span>
                     </b-list-group-item>
 
                     <b-list-group-item class="d-flex justify-content-between">
@@ -138,7 +167,13 @@
                         <span class="text-center ml-5">N° de multimedia :</span>
                       </span>
 
-                      <span>{{ plan.max_multimedia }}</span>
+                      <span>
+                        <h5>
+                          <b-badge variant="primary">{{
+                            plan.max_multimedia
+                          }}</b-badge>
+                        </h5>
+                      </span>
                     </b-list-group-item>
 
                     <b-list-group-item class="d-flex justify-content-between">
@@ -147,19 +182,27 @@
                         <span class="text-center ml-5">N° de encuestas :</span>
                       </span>
 
-                      <span>{{ plan.max_polls }}</span>
+                      <span>
+                        <h5>
+                          <b-badge variant="primary">{{
+                            plan.max_polls
+                          }}</b-badge>
+                        </h5>
+                      </span>
                     </b-list-group-item>
 
                     <b-list-group-item>
-                      <b-form-radio
-                        button
-                        button-variant="warning"
-                        v-model="dataOrganization.plan"
-                        name="some-radios"
-                        :value="plan"
-                        size="lg"
-                        >Selecciona este plan</b-form-radio
-                      >
+                      <div class="my-buttons">
+                        <b-button
+                          @click="selectPlan(plan)"
+                          :style="
+                            dataOrganization.plan._id == plan._id
+                              ? 'background-color: #FF6390 !important'
+                              : 'background-color: #ff007a !important'
+                          "
+                          >Selecciona este plan</b-button
+                        >
+                      </div>
                     </b-list-group-item>
                   </b-list-group>
                 </b-card>
@@ -179,7 +222,7 @@
           <b-button
             type="button"
             @click="createOrganization()"
-            variant="success"
+            variant="primary"
             class="float-right mr-3"
             >Crear organización</b-button
           >
@@ -270,6 +313,10 @@ export default {
         plan: "",
       };
     },
+
+    selectPlan(plan) {
+      this.dataOrganization.plan = plan;
+    },
   },
   mounted() {
     this.$axios
@@ -293,6 +340,18 @@ export default {
 
 <style lang="scss">
 @import "@/imports/variables";
+
+.border-success {
+  border-color: $maincolor !important;
+}
+
+.bg-success {
+  background-color: $maincolor !important;
+}
+
+.badge-primary {
+  background-color: $maincolor !important;
+}
 
 .table > :not(caption) > * > * {
   vertical-align: middle;
@@ -345,7 +404,6 @@ export default {
   .card {
     background-color: #141414 !important;
     color: #ddd;
-    border: 1px solid #333;
   }
 
   .list-group {
@@ -394,12 +452,12 @@ export default {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #ffc107;
+  background: #2e3338;
   border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffc107;
+  background: #2e3338;
 }
 </style>
